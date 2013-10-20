@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   serialize :credentials, JSON
   delegate :latitude, :to => :location, :allow_nil => true
   delegate :longitude, :to => :location, :allow_nil => true
+  validates_uniqueness_of :uid, :nickname
   
   self.rgeo_factory_generator = RGeo::Geos.factory_generator
   set_rgeo_factory_for_column(:location, RGeo::Geographic.spherical_factory(:srid => 4326))
@@ -14,7 +15,15 @@ class User < ActiveRecord::Base
   end
   
   def friends
-    User.where("uid in (0,#{friend_ids.join(',')}) and #{uid} = ANY(friend_ids)")
+    if friend_ids.present?
+      User.where("uid in (0,#{friend_ids.join(',')}) and #{uid} = ANY(friend_ids)")
+    else
+      []
+    end
+  end
+  
+  def friends_with?(other)
+    self==other or friends.include?(other)
   end
   
   def city
@@ -23,6 +32,13 @@ class User < ActiveRecord::Base
 
   def first_name
     name.split.first
+  end
+  
+  def self.fetch_friend_ids
+    User.where(:friend_ids => nil).each do |user|
+      user.fetch_friend_ids!
+      sleep 1
+    end
   end
   
   def fetch_friend_ids!

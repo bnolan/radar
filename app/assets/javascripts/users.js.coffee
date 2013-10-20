@@ -26,5 +26,9 @@ class UserController
       form.find("input[name*='[latitude]']").val(place.geometry.location.lat())
       form.find("input[name*='[longitude]']").val(place.geometry.location.lng())
 
+    input.keydown (e) ->
+      if e.keyCode == 13
+        e.preventDefault()
+
 $ ->
   window.users = new UserController

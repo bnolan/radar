@@ -1,0 +1,54 @@
+<h1>
+  <%= @user.name %> on Radar
+</h1>
+
+<p>
+  Radar user since <%= @user.created_at.to_date %>.
+  Follow <%= link_to @user.nickname, "http://twitter.com/#{@user.nickname}" %> on twitter.
+</p>
+
+<% if current_user and current_user.friends_with? @user %>
+  <h3><%= @user.first_name %>s Upcoming Trips</h3>
+
+  <% if @user.trips.upcoming.any? %>
+    <ul>
+      <% @user.trips.upcoming.order('start asc').each do |trip| %>
+        <li>
+          <%= link_to trip_name(trip), trip %><br />
+          <small><%= our_date(trip.start) %> to <%= our_date(trip.finish) %>. <span class="lesser"><%= number_with_delimiter trip.distance %>km.</span></small>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p><%= @user.first_name %> doesn't have any upcoming trips.</p>
+  <% end %>
+<% end %>
+
+<h3><%= @user.first_name %>s Past Trips</h3>
+
+<% if @user.trips.past.any? %>
+  <ul>
+    <% @user.trips.past.order('start desc').each do |trip| %>
+      <li>
+        <%= link_to trip_name(trip), trip %><br />
+        <small><%= our_date_and_year(trip.start) %> to <%= our_date_and_year(trip.finish) %>. <span class="lesser"><%= number_with_delimiter trip.distance %>km.</span></small>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p><%= @user.first_name %> doesn't have any past trips.</p>
+<% end %>
+
+<h3>Friends</h3>
+
+<% if @user.friends.any? %>
+  <div class="friends">
+    <% @user.friends.each do |user| %>
+      <%= link_to image_tag(user.image), user, :title => "@#{user.nickname} - #{user.name}" %>
+    <% end %>
+  </div>
+<% else %>
+  <p>
+    This user has no friends using Radar.
+  </p>
+<% end%>

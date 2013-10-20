@@ -2,7 +2,7 @@
   Add a Trip
 </h1>
 
-<%= form_for Trip.new do |f| %>
+<%= form_for @trip do |f| %>
   <%= render :partial => 'form', :locals => {:f => f} %>
 
   <div>

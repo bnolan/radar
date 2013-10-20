@@ -1,3 +1,5 @@
+<%= error_messages_for f.object %>
+
 <table class="legs">
   <% (f.object.legs.any? ? f.object.legs : [Leg.new]).each_with_index do |leg, index| %>
     <tr class="leg">

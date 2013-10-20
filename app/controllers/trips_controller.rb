@@ -1,34 +1,41 @@
 class TripsController < ApplicationController
-  
-  def create
-    trip = current_user.trips.build trip_params
-    build_legs(trip)
-    trip.save!
+  before_filter :authenticate_user!
 
-    flash[:notice] = "Trip created"
-
-    redirect_to trip
-  end
-  
-  def update
-    trip = current_user.trips.find params[:id]
-    trip.attributes = trip_params
-    build_legs(trip)
-    trip.save!
-
-    flash[:notice] = "The changes to your trip were saved"
-
-    redirect_to trip
-  end
-  
   def show
     @trip = Trip.find params[:id]
 
-    if not @trip.visible_to current_user
+    if @trip.future? and !@trip.user.friends_with?(current_user)
       raise ActiveRecord::RecordNotFound
     end
   end
     
+  def new
+    @trip = Trip.new
+  end
+
+  def create
+    @trip = current_user.trips.build trip_params
+    build_legs(@trip)
+    if @trip.save
+      flash[:notice] = "Trip created"
+      redirect_to @trip
+    else
+      render :action => :new
+    end
+  end
+  
+  def update
+    @trip = current_user.trips.find params[:id]
+    @trip.attributes = trip_params
+    build_legs(@trip)
+    if @trip.save
+      flash[:notice] = "The changes to your trip were saved"
+      redirect_to @trip
+    else
+      render :action => :edit
+    end
+  end
+  
   def edit
     @trip = current_user.trips.find params[:id]
   end
@@ -58,5 +65,4 @@ class TripsController < ApplicationController
     
     trip.start = trip.legs.first.arrival
   end
-  
 end

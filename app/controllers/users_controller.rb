@@ -1,11 +1,17 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show]
+  
+  def show
+    @user = User.find_by_nickname params[:id]
+  end
   
   def update
     current_user.update_attributes!(
       :city_path => params[:user][:city_path],
+      :email => params[:user][:email],
       :location => User.factory.point(params[:user][:longitude], params[:user][:latitude])
     )
-    flash[:notice] = "Set your home location"
+    
     redirect_to root_path
   end
 
@@ -21,5 +27,4 @@ class UsersController < ApplicationController
       end
     end
   end
-  
 end

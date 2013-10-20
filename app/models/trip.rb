@@ -1,19 +1,17 @@
 class Trip < ActiveRecord::Base
   has_many :legs
   belongs_to :user
-  scope :upcoming, lambda { where('start >= ?', Date.today) }
-  scope :past, lambda { where('start < ?', Date.today) }
-  
-  def visible_to(other)
-    user == other
-  end
+  scope :upcoming, lambda { where('finish >= ?', Date.today) }
+  scope :past, lambda { where('finish < ?', Date.today) }
+  validates_presence_of :start, :finish
   
   def days
     (finish - start).to_i
   end
   
+  # includes trips that haven't finished
   def future?
-    Date.today <= start
+    Date.today <= finish
   end
 
   def distance

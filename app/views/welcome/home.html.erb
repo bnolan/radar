@@ -22,9 +22,9 @@
   </p>
 <% end %>
 
+<h3>Upcoming Trips</h3>
+
 <% if current_user.trips.upcoming.any? %>
-  <h3>Upcoming Trips</h3>
-  
   <ul>
     <% current_user.trips.upcoming.order('start asc').each do |trip| %>
       <li>
@@ -60,7 +60,7 @@
   </div>
 <% else %>
   <p>
-    You currently have no friends using Radar.
+    You have no friends using Radar.
   </p>
 <% end%>
 
