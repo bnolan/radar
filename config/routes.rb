@@ -14,6 +14,8 @@ Radar::Application.routes.draw do
   post 'dopplr_import' => 'users#dopplr_import'
 
   get 'settings' => 'welcome#settings', :as => :settings
+  get 'terms' => 'welcome#terms', :as => :terms
+
   resources :trips
   resources :users
   
