@@ -10,3 +10,11 @@ development:
   postgis_extension: true
   username: ben
   password: test
+
+production:
+  host:     localhost
+  adapter:  postgis
+  database: radar_production
+  postgis_extension: true
+  username: ben
+  password: test
