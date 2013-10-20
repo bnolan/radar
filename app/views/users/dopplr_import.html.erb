@@ -1,0 +1,50 @@
+<h1>
+  Import from Dopplr
+</h1>
+
+<p>
+  This lets you import all your travel data from Dopplr, so that you can review your old trips, and get statistics on 
+  all your travels. We currently only import your Trips, and not your atlas data. Keep hold of your Dopplr
+  export.zip and we may add importing for other data types over time.
+</p>
+
+<br />
+
+<h3>
+  Step 1. Download from Dopplr
+</h3>
+
+<p>
+  First you need to <%= link_to "export your data from Dopplr", "http://www.dopplr.com/account/data_export", :target => "_blank" %>.
+  Click 'Send me my data' and Dopplr will let your download a .zip file of your data, save this to your PC.
+</p>
+
+<br />
+
+<h3>
+  Step 2. Import into Radar
+</h3>
+
+<p>
+  Upload your exported.zip file:
+</p>
+
+<%= form_tag dopplr_import_path, :multipart => true, :style => 'margin-left: 20px; background: #eee; padding: 20px; width: 400px' do %>
+  <p>
+    <%= file_field_tag 'upload' %>
+  </p>
+  
+  <p>
+    <%= submit_tag 'Upload your data', :class => 'btn btn-primary btn-sm' %>
+  </p>
+<% end %>
+
+<br />
+
+<h3>
+  Step 3. Finished!
+</h3>
+
+<p>
+  Your trips will be available from the radar home page.
+</p>

@@ -1,0 +1,40 @@
+<table class="legs">
+  <% (f.object.legs.any? ? f.object.legs : [Leg.new]).each_with_index do |leg, index| %>
+    <tr class="leg">
+      <%= fields_for "trip[leg][#{index}]", leg do |ff| %>
+        <td>
+          Destination:<br />
+          <%= ff.text_field :city, :value => ff.object.city.name %>
+          <%= ff.hidden_field :city_path %>
+          <%= ff.hidden_field :latitude %>
+          <%= ff.hidden_field :longitude %>
+        </td>
+        <td>
+          Arrival:<br />
+          <%= ff.date_field :arrival %>
+        </td>
+        <td class="delete">
+          <%= link_to_function "X", "trips.removeLeg(this)", :class => 'btn btn-warning btn-xs' %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  <tr>
+    <td></td>
+    <td class="small"><%= link_to_function "Add another stop on this trip", "trips.addLeg()" %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      Returning home:<br />
+      <%= f.date_field :finish %>
+    </td>
+  </tr>
+</table>
+
+<div>
+  <label>Notes (optional)</label><br />
+  <%= f.text_area :notes, :style => 'width: 580px; height: 150px' %>
+</div>
+
+<br />

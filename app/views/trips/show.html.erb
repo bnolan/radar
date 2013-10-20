@@ -1,0 +1,52 @@
+<h1>
+  Trip to <%= @trip.legs.collect { |l| l.city.name }.to_sentence %>
+</h1>
+
+<p>
+  <% if current_user == @trip.user %>
+    <%= link_to "Edit Trip", edit_trip_path(@trip) %> |
+    <%= link_to "Delete Trip", @trip, :method => 'delete', :confirm => "Delete Trip.\n\nAre you sure?!?" %> |
+  <% end %>
+
+  <%= current_user == @trip.user ? "You #{@trip.future? ? 'are' : 'were'}" : link_to(@trip.user.first_name, @trip.user) + " #{@trip.future? ? 'is' : 'was'}" %>
+  away for <b><%= pluralize @trip.days, 'day' %></b> from 
+  <b><%= @trip.start %></b> to <b><%= @trip.finish %></b>, travelling
+  <b><%= number_with_delimiter @trip.distance %>km</b>.
+</p>
+
+<h3>
+  Destinations
+</h3>
+
+<table class="show-legs">
+  <tr>
+    <th>Destination</th>
+    <th>Arrival</th>
+  </tr>
+  
+  <% @trip.legs.each do |leg| %>
+    <tr>
+      <td>
+        <%= leg.city.name %>
+      </td>
+      <td>
+        <%= our_date leg.arrival %>
+      </td>
+    </tr>
+  <% end %>
+  
+  <tr class="returning">
+    <td><%= @trip.future? ? "Returning" : "Returned" %> home</td>
+    <td>
+      <%= our_date @trip.finish %>
+    </td>
+  </tr>
+</table>
+
+<% if @trip.notes.present? %>
+  <h3>
+    Notes
+  </h3>
+
+  <%= simple_format @trip.notes %>
+<% end %>

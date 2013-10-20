@@ -1,0 +1,31 @@
+<h1>
+  Welcome to Radar!
+</h1>
+
+<p>
+  To get started, please tell us your email address and your home location. We will only
+  share this information with the <b>people you follow</b> on Twitter.
+</p>
+<br />
+
+<%= form_for current_user do |f| %>
+  <div class="f">
+    <label>Your email address:</label><br />
+    <%= f.text_field :email, :style => 'width: 400px' %>
+  </div>
+  <br />
+
+  <div class="f">
+    <label>Your home city:</label><br />
+    <%= f.text_field :city, :value => f.object.city.name, :style => 'width: 400px' %>
+    <%= f.hidden_field :city_path %>
+    <%= f.hidden_field :latitude %>
+    <%= f.hidden_field :longitude %>
+  </div>
+  
+  <br />
+  
+  <div class="f">
+    <%= submit_tag "Set location", :class => 'btn btn-primary' %>
+  </div>
+<% end %>

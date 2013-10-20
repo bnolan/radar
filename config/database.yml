@@ -1,0 +1,12 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+development:
+  host:     localhost
+  adapter:  postgis
+  database: radar_dev
+  postgis_extension: true
+  username: ben
+  password: test

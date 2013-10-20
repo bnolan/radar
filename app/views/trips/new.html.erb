@@ -1,0 +1,12 @@
+<h1>
+  Add a Trip
+</h1>
+
+<%= form_for Trip.new do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+
+  <div>
+    <%= submit_tag "Add Trip", :class => "btn btn-primary" %>
+  </div>
+
+<% end %>

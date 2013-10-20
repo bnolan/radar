@@ -1,0 +1,48 @@
+// Place all the styles related to the trips controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+form{
+  table.legs{
+    tr:nth-child(1) .delete a{
+      display: none;
+    }
+  
+    td{
+      border-bottom: 1px solid #ccc;
+      padding: 20px 20px 20px 0;
+    }
+    input[name*='city']{
+      width: 400px;
+    }
+    .delete a{
+      margin-top: 10px;
+    }
+  }
+}
+
+table.show-legs{
+  width: 400px;
+
+  th,td{
+    padding: 5px 2px;
+  }
+  
+  th{
+    color: #333;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .returning{
+    color: #777;
+    border-top: 1px solid #ccc;
+  }
+    
+  th+th,td+td{
+    text-align: right;
+  }
+}
+
+textarea{
+  width: 400px;
+}

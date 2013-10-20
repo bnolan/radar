@@ -1,0 +1,76 @@
+<h1>
+  Welcome, <%= current_user.first_name %>
+</h1>
+
+<!--p>
+  You are at home in <%= current_user.city.name %>.
+</p-->
+
+<p>
+  Radar is connected to your <%= link_to "twitter account", "http://twitter.com/#{current_user.nickname}" %>.
+  People you follow will be able to see your upcoming trips. Anyone can see your past trips.
+</p>
+
+<!-- fixme -->
+<% if false and current_user.city.present? %>
+  <h3>
+    <%= Date.today.strftime "%A %b %d" %>
+  </h3>
+
+  <p>
+    You are at home in <%= current_user.city.name %> today.
+  </p>
+<% end %>
+
+<% if current_user.trips.upcoming.any? %>
+  <h3>Upcoming Trips</h3>
+  
+  <ul>
+    <% current_user.trips.upcoming.order('start asc').each do |trip| %>
+      <li>
+        <%= link_to trip_name(trip), trip %><br />
+        <small><%= our_date(trip.start) %> to <%= our_date(trip.finish) %>. <span class="lesser"><%= number_with_delimiter trip.distance %>km.</span></small>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You don't have any upcoming trips. <%= link_to "Add a trip", new_trip_path %>.</p>
+<% end %>
+
+<% if current_user.trips.past.any? %>
+  <h3>Past Trips</h3>
+  
+  <ul>
+    <% current_user.trips.past.order('start desc').each do |trip| %>
+      <li>
+        <%= link_to trip_name(trip), trip %><br />
+        <small><%= our_date_and_year(trip.start) %> to <%= our_date_and_year(trip.finish) %>. <span class="lesser"><%= number_with_delimiter trip.distance %>km.</span></small>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h3>Friends</h3>
+
+<% if current_user.friends.any? %>
+  <div class="friends">
+    <% current_user.friends.each do |user| %>
+      <%= link_to image_tag(user.image), user, :title => "@#{user.nickname} - #{user.name}" %>
+    <% end %>
+  </div>
+<% else %>
+  <p>
+    You currently have no friends using Radar.
+  </p>
+<% end%>
+
+<p class="lesser">
+  <% if current_user.friend_ids %>
+    Note: You currently follow
+    <b><%= current_user.friend_ids.length %> people</b> on Twitter. 
+  <% else %>
+    Note: We are currently <b>processing your profile</b> from Twitter.
+  <% end %>
+  If any of the people you follow join Radar - and they also follow you - you will become friends on Radar.
+  There is no way to directly &ldquo;add a friend&rdquo; on Radar, we base friendships based on who you follow.
+</p>

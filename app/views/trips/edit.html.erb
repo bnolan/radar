@@ -1,0 +1,12 @@
+<h1>
+  Edit your Trip
+</h1>
+
+<%= form_for @trip do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+
+  <div>
+    <%= submit_tag "Save Changes", :class => "btn btn-primary" %>
+    or <%= link_to "go back", :back %>
+  </div>
+<% end %>

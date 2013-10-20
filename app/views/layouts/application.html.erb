@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Radar</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h3>
+        <a href="/" class="rrr">R</a>
+        Radar
+      </h3>
+    </div>
+      
+    <% if current_user %>
+      <ul class="navigation">
+        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "Add a trip", new_trip_path %></li>
+        <li><%= link_to "Dopplr import", dopplr_import_path %></li>
+        <li><%= link_to "Settings", settings_path %></li>
+        <li><%= link_to "Logout", logout_path %></li>
+      </ul>
+    <% end %>
+      
+    <% if notice.present? %>
+      <p class="notice"><%= notice %>.</p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="alert"><%= alert %>.</p>
+    <% end %>
+    
+    <%= yield %>
+  </div>
+
+</body>
+</html>

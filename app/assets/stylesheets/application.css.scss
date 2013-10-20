@@ -1,0 +1,104 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require 'bootstrap'
+ *= require 'bootstrap-theme'
+ *= require_tree .
+ */
+
+h1,h2,h3,h3,h5{
+  font-family: 'helvetica neue', sans-serif !important;
+  font-weight: 200 !important;
+  color: #555;
+}
+
+h1,h2,h3{
+  letter-spacing: -1px;
+}
+
+.header{
+  border-bottom: 1px solid #ccc;
+
+  .rrr{
+    background: #428bca;
+    background: -webkit-gradient(linear, left 0%, left 100%, from(#428bca), to(#3071a9));
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    display: inline-block;
+    color: white;
+    text-shadow: 1px 1px rgba(0,0,0,0.5);
+    border-radius: 5px;
+  }
+  
+  
+  h3{
+    color: #555;
+  }
+}
+
+.navigation{
+  border-bottom: 1px solid #ccc;
+  margin: 0;
+  padding: 0 20px;
+  text-align: center;
+  
+  li{
+    list-style: none;
+    display: inline-block;
+    padding: 0 10px;
+  }
+  li+li{
+    border-left: 1px solid #ccc;
+  }
+}
+
+p.lesser{
+  color: #777;
+  font-size: small;
+}
+
+small .lesser{
+  color: #777;
+}
+
+.notice{
+  border: 1px solid #0c0;
+  background: #efe;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.notice,.alert{
+  padding: 8px;
+  margin-top: 20px;
+  border-radius: 2px !important;
+}
+
+.notice{
+  border: 1px solid #0c0 !important;
+  background: #efe;
+}
+
+.alert{
+  border: 1px solid #f00 !important;
+  background: #fee;
+}
+
+.friends{
+  margin-bottom: 20px;
+  
+  img{
+    border-radius: 2px;
+    margin-right: 10px;
+    width: 32px;
+  }
+}
