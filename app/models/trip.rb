@@ -15,17 +15,21 @@ class Trip < ActiveRecord::Base
   end
 
   def distance
-    distance = user.location.distance(legs.first.location)
+    if legs.empty?
+      0
+    else
+      distance = user.location.distance(legs.first.location)
     
-    previous_leg = legs.first
+      previous_leg = legs.first
     
-    legs.slice(1,100).each do |leg|
-      distance += previous_leg.location.distance(leg.location)
-    end
+      legs.slice(1,100).each do |leg|
+        distance += previous_leg.location.distance(leg.location)
+      end
     
-    distance += previous_leg.location.distance(user.location)
+      distance += previous_leg.location.distance(user.location)
 
-    (distance / 1000).to_i
+      (distance / 1000).to_i
+    end
   end
   
 end
