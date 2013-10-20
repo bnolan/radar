@@ -19,7 +19,13 @@ class Leg < ActiveRecord::Base
   # end
 
   def self.factory
-    Leg.rgeo_factory_for_column(:location)
+    f = Leg.rgeo_factory_for_column(:location)
+
+    if f.is_a?(Proc)
+      f.call({})
+    else
+      f
+    end
   end
   
   def self.components_to_path(components)

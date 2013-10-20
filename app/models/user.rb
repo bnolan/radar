@@ -67,7 +67,13 @@ class User < ActiveRecord::Base
   end
   
   def self.factory
-    User.rgeo_factory_for_column(:location)
+    f = User.rgeo_factory_for_column(:location)
+
+    if f.is_a?(Proc)
+      f.call({})
+    else
+      f
+    end
   end
 
   def dopplr_import!(filename)
