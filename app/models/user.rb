@@ -15,11 +15,11 @@ class User < ActiveRecord::Base
   end
   
   def friends
-    if friend_ids.present?
-      User.where("uid in (0,#{friend_ids.join(',')}) and #{uid} = ANY(friend_ids)")
-    else
-      []
-    end
+    @friends ||= if friend_ids.present?
+        User.where("uid in (0,#{friend_ids.join(',')}) and #{uid} = ANY(friend_ids)")
+      else
+        []
+      end
   end
 
   def distance

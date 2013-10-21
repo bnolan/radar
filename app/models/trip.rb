@@ -5,6 +5,11 @@ class Trip < ActiveRecord::Base
   scope :past, lambda { where('finish < ?', Date.today) }
   validates_presence_of :start, :finish
   before_save :recalculate_distance
+  default_scope includes(:legs)
+  
+  def day_trip?
+    days == 0
+  end
   
   def days
     (finish - start).to_i
