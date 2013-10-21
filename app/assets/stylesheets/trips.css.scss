@@ -41,8 +41,40 @@ table.show-legs{
   th+th,td+td{
     text-align: right;
   }
+  
+  .color{
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    top: 1px;
+    span{
+      display: inline-block;
+    }
+  }
 }
 
 textarea{
   width: 400px;
+}
+
+li.trip{
+  position: relative;
+  list-style: none;
+  
+  .color{
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    position: absolute;
+    left: -28px;
+    top: 3px;
+    border: 1px solid #aaa;
+    
+    span{
+      display: inline-block;
+      height: 20px;
+    }
+  }
 }

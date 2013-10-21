@@ -27,6 +27,9 @@
   <% @trip.legs.each do |leg| %>
     <tr>
       <td>
+        <span class="color">
+          <span style="background: <%= leg.city.color %>; width: 100%">&nbsp;</span>
+        </span>
         <%= leg.city.name %>
       </td>
       <td>

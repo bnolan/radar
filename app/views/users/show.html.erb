@@ -3,6 +3,9 @@
 </h1>
 
 <p>
+  <% if current_user and current_user.friends_with? @user %>
+    <%= @user.first_name %> is at home in <%= @user.city.name %>.
+  <% end %>
   Radar user since <%= @user.created_at.to_date %>.
   Follow <%= link_to @user.nickname, "http://twitter.com/#{@user.nickname}" %> on twitter.
 </p>
@@ -13,10 +16,7 @@
   <% if @user.trips.upcoming.any? %>
     <ul>
       <% @user.trips.upcoming.order('start asc').each do |trip| %>
-        <li>
-          <%= link_to trip_name(trip), trip %><br />
-          <small><%= our_date(trip.start) %> to <%= our_date(trip.finish) %>. <span class="lesser"><%= number_with_delimiter trip.distance %>km.</span></small>
-        </li>
+        <%= render :partial => 'trips/show', :locals => { :trip => trip } %>
       <% end %>
     </ul>
   <% else %>
@@ -29,10 +29,7 @@
 <% if @user.trips.past.any? %>
   <ul>
     <% @user.trips.past.order('start desc').each do |trip| %>
-      <li>
-        <%= link_to trip_name(trip), trip %><br />
-        <small><%= our_date_and_year(trip.start) %> to <%= our_date_and_year(trip.finish) %>. <span class="lesser"><%= number_with_delimiter trip.distance %>km.</span></small>
-      </li>
+      <%= render :partial => 'trips/show', :locals => { :trip => trip } %>
     <% end %>
   </ul>
 <% else %>

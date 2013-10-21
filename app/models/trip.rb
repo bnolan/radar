@@ -31,5 +31,9 @@ class Trip < ActiveRecord::Base
       (distance / 1000).to_i
     end
   end
-  
+
+  # from http://www.carbonindependent.org/sources_aviation.htm
+  def carbon_kg
+    distance * 0.033
+  end
 end

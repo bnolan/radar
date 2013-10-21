@@ -1,0 +1,8 @@
+<li class="trip">
+  <span class="color">
+    <% trip.legs.each do |leg| %><span style="background: <%= leg.city.color %>; width: <%= 100 / trip.legs.length %>%">&nbsp;</span><% end %>
+  </span>
+  
+  <%= link_to trip_name(trip), trip %><br />
+  <small><%= our_date_and_year(trip.start) %> to <%= our_date_and_year(trip.finish) %>. <span class="lesser"><%= number_with_delimiter trip.distance %>km.</span></small>
+</li>
