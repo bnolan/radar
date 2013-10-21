@@ -11,7 +11,8 @@
 
     <%= current_user == @trip.user ? "You #{@trip.future? ? 'are' : 'were'}" : link_to(@trip.user.first_name, @trip.user) + " #{@trip.future? ? 'is' : 'was'}" %>
     away for <%= trip_duration(@trip) %>.
-    Travelling <b><%= number_with_delimiter @trip.distance %>km</b>.
+    Travelling <b><%= number_with_delimiter @trip.distance %>km</b>
+    and generating <b><%= number_with_delimiter current_user.carbon_kg %>kg of CO<sub>2</sub></b>.
   </p>
 </div>
 
