@@ -1,4 +1,5 @@
 require 'ostruct'
+require 'digest'
 
 class City < OpenStruct
   def self.new_from_path(path, latitude, longitude)
@@ -21,5 +22,9 @@ class City < OpenStruct
   
   def present?
     name.present? and latitude.present? and longitude.present?
+  end
+  
+  def color
+    '#' + Digest::MD5.hexdigest(self.name).slice(0,6)
   end
 end
