@@ -31,4 +31,8 @@ class Leg < ActiveRecord::Base
   def self.components_to_path(components)
     components.map { |c| c.gsub('/','|').gsub(/\s+/,'+') }.join('/')
   end
+  
+  def self.unique_city_count
+    Leg.select('distinct city_path').count
+  end
 end

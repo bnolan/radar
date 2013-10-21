@@ -1,0 +1,32 @@
+<h1>
+  Friends
+</h1>
+
+<p>
+  You have <b><%= pluralize @friends.count, 'friend' %></b> using Radar.
+</p>
+
+<ul>
+  <% @friends.each do |user| %>
+    <li>
+      <%= link_to user.name, user %>
+    </li>
+  <% end %>
+</ul>
+
+<h1>
+  Other Travellers
+</h1>
+
+<p>
+  There are <b><%= User.count %> travellers</b> 
+  using Radar to share over <b><%= (Trip.count / 5).to_i * 5 %> trips</b> to <b><%= Leg.unique_city_count %> cities</b>.
+</p>
+
+<ul>
+  <% @users.each do |user| %>
+    <li>
+      <%= link_to user.name, user %>
+    </li>
+  <% end %>
+</ul>
