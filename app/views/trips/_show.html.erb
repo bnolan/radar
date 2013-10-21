@@ -4,5 +4,8 @@
   </span>
   
   <%= link_to trip_name(trip), trip %><br />
-  <small><%= our_date_and_year(trip.start) %> to <%= our_date_and_year(trip.finish) %>. <span class="lesser"><%= number_with_delimiter trip.distance %>km.</span></small>
+  <small>
+    <%= our_date_and_year(trip.start) %> to <%= our_date_and_year(trip.finish) %>. 
+    <span class="lesser"><%= number_with_delimiter trip.distance %>km, <%= number_with_delimiter trip.carbon_kg %>kg of CO<sub>2</sub></span>
+  </small>
 </li>

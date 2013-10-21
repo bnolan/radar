@@ -10,6 +10,8 @@
   Radar is connected to your <%= link_to "twitter account", "http://twitter.com/#{current_user.nickname}" %>.
   People you follow will be able to see your upcoming trips. 
   Anyone can see the date and location of your past trips, but not the details of your trip.
+  You have travelled <b><%= number_with_delimiter current_user.distance %>km</b>
+  and generated <b><%= number_with_delimiter current_user.carbon_kg %>kg of CO<sub>2</sub></b> in your travels.
 </p>
 
 <!-- fixme -->

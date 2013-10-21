@@ -4,6 +4,7 @@ class Trip < ActiveRecord::Base
   scope :upcoming, lambda { where('finish >= ?', Date.today) }
   scope :past, lambda { where('finish < ?', Date.today) }
   validates_presence_of :start, :finish
+  before_save :recalculate_distance
   
   def days
     (finish - start).to_i
@@ -14,26 +15,30 @@ class Trip < ActiveRecord::Base
     Date.today <= finish
   end
 
-  def distance
-    if legs.empty?
+  def recalculate_distance
+    self.distance = if legs.empty?
       0
     else
-      distance = user.location.distance(legs.first.location)
+      begin
+        d = user.location.distance(legs.first.location)
     
-      previous_leg = legs.first
+        previous_leg = legs.first
     
-      legs.slice(1,100).each do |leg|
-        distance += previous_leg.location.distance(leg.location)
-      end
+        legs.slice(1,100).each do |leg|
+          d += previous_leg.location.distance(leg.location)
+        end
     
-      distance += previous_leg.location.distance(user.location)
+        d += previous_leg.location.distance(user.location)
 
-      (distance / 1000).to_i
+        (d / 1000).to_i
+      rescue
+        0
+      end
     end
   end
 
   # from http://www.carbonindependent.org/sources_aviation.htm
   def carbon_kg
-    distance * 0.033
+    (distance * 0.033).to_i
   end
 end

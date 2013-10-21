@@ -21,6 +21,14 @@ class User < ActiveRecord::Base
       []
     end
   end
+
+  def distance
+    trips.past.sum(&:distance)
+  end
+  
+  def carbon_kg
+    trips.past.sum(&:carbon_kg)
+  end
   
   def friends_with?(other)
     self==other or friends.include?(other)
