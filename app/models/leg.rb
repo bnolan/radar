@@ -35,4 +35,12 @@ class Leg < ActiveRecord::Base
   def self.unique_city_count
     Leg.select('distinct city_path').count
   end
+  
+  # def as_json(*args)
+  #   {
+  #     :city => city,
+  #     :latitude => latitude,
+  #     :longitude => longitude
+  #   }
+  # end
 end

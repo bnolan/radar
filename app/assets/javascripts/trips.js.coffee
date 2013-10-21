@@ -2,6 +2,84 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+class TripMap
+  constructor: (id, home, trip) ->
+    coordinates = []
+    coordinates.push(new google.maps.LatLng(home.latitude, home.longitude))
+    for leg in trip.legs
+      coordinates.push(new google.maps.LatLng(leg.latitude, leg.longitude))
+    coordinates.push(new google.maps.LatLng(home.latitude, home.longitude))
+    
+    console.log coordinates
+    
+    bounds = new google.maps.LatLngBounds
+    for c in coordinates
+      bounds.extend c
+
+    mapOptions = {
+      zoom : 10
+      center : new google.maps.LatLng(0, 0)
+      mapTypeId : google.maps.MapTypeId.TERRAIN
+    }
+
+    map = new google.maps.Map($(id)[0], mapOptions);
+    map.fitBounds(bounds)
+    
+    pathStroke = new google.maps.Polyline {
+      path: coordinates
+      geodesic: true
+      strokeColor: '#000000'
+      strokeOpacity: 1.0
+      strokeWeight: 5
+    }
+    pathStroke.setMap(map)
+
+    path = new google.maps.Polyline {
+      path: coordinates
+      geodesic: true
+      strokeColor: '#FFFFFF'
+      strokeOpacity: 1.0
+      strokeWeight: 3
+    }
+    path.setMap(map)
+  
+    new google.maps.Marker {
+      position : new google.maps.LatLng(home.latitude, home.longitude)
+      map : map
+      title : "Home - #{home.name}"
+      icon: {
+        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW
+        fillColor: 'white'
+        fillOpacity: 1.0
+        strokeColor: 'black'
+        strokeWeight: 1
+        scale: 5
+      }
+    }
+    
+    trip.legs.forEach (leg) ->
+      marker = new google.maps.Marker {
+        position : new google.maps.LatLng(leg.latitude, leg.longitude)
+        map : map
+        title : "#{leg.city.name}"
+        icon: {
+          path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW
+          fillColor: leg.city.color
+          fillOpacity: 1.0
+          strokeColor: 'black'
+          strokeWeight: 1
+          scale: 5
+        }
+      }
+
+      google.maps.event.addListener marker, 'mouseover', ->
+        $(".show-legs tr#leg-#{leg.id}").addClass 'active'
+
+      google.maps.event.addListener marker, 'mouseout', ->
+        $(".show-legs tr").removeClass 'active'
+  
+@TripMap = TripMap
+
 class TripController
   constructor: ->
     for row in $("table.legs tr.leg")

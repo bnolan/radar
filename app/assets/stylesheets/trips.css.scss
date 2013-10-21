@@ -28,6 +28,10 @@ table.show-legs{
     padding: 5px 2px;
   }
   
+  .active td{
+    background: #ffa;
+  }
+  
   th{
     color: #333;
     border-bottom: 1px solid #ccc;
@@ -77,4 +81,11 @@ li.trip{
       height: 20px;
     }
   }
+}
+
+#map{
+  width: 100%;
+  height: 400px;
+  background: #eee;
+  border: 1px solid #ccc;
 }

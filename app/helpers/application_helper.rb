@@ -16,7 +16,7 @@ module ApplicationHelper
     (if t.days == 0
       "<b>a daytrip</b> on <b>#{our_date_and_year(t.start)}</b>"
     else
-      "<b>" + pluralize(t.days, 'day') + "</b>" +
+      "<b>" + pluralize(t.days, 'night') + "</b>" +
       " from " +
       "<b>" + @trip.start.to_s + "</b> to <b>" + @trip.finish.to_s + "</b>"
     end).html_safe
