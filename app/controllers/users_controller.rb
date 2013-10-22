@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @friends = current_user.friends
-    @users = User.order('created_at asc').all - @friends - [current_user]
+    @users = User.where('(select count(trips.id) from trips where user_id=users.id)>1').order('created_at asc').all - @friends - [current_user]
   end
   
   def show

@@ -8,6 +8,8 @@
   <% end %>
   Radar user since <%= @user.created_at.to_date %>.
   Follow <%= link_to @user.nickname, "http://twitter.com/#{@user.nickname}" %> on twitter.
+  <%= @user.first_name %> has travelled <b><%= number_with_delimiter @user.distance %>km</b>
+  and generated <b><%= number_with_delimiter @user.carbon_kg %>kg of CO<sub>2</sub></b> in their travels.
 </p>
 
 <% if current_user and current_user.friends_with? @user %>
@@ -27,6 +29,8 @@
 <h3><%= @user.first_name %>s Past Trips</h3>
 
 <% if @user.trips.past.any? %>
+  <div id="zeitgeist-map"></div>
+  
   <ul>
     <% @user.trips.past.order('start desc').each do |trip| %>
       <%= render :partial => 'trips/show', :locals => { :trip => trip } %>
@@ -49,3 +53,7 @@
     This user has no friends using Radar.
   </p>
 <% end%>
+
+<script>
+  new Raumzeitgeist(<%= @user.trips.past.to_json(:include => [:legs => {:include => [:city]}]).html_safe %>);
+</script>

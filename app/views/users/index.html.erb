@@ -15,12 +15,13 @@
 </ul>
 
 <h1>
-  Other Travellers
+  Fellow Travellers
 </h1>
 
 <p>
   There are <b><%= User.count %> travellers</b> 
   using Radar to share over <b><%= (Trip.count / 5).to_i * 5 %> trips</b> to <b><%= Leg.unique_city_count %> cities</b>.
+  Here are the travellers with visible trips.
 </p>
 
 <ul>
