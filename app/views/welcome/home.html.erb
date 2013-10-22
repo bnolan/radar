@@ -40,6 +40,8 @@
 <% if current_user.trips.past.any? %>
   <h3>Past Trips</h3>
   
+  <div id="zeitgeist-map"></div>
+
   <ul>
     <% current_user.trips.past.order('start desc').each do |trip| %>
       <%= render :partial => 'trips/show', :locals => { :trip => trip } %>
@@ -71,3 +73,7 @@
   If any of the people you follow join Radar - and they also follow you - you will become friends on Radar.
   There is no way to directly &ldquo;add a friend&rdquo; on Radar, we base friendships based on who you follow.
 </p>
+
+<script>
+  new Raumzeitgeist(<%= current_user.trips.past.limit(500).to_json(:include => [:legs => {:include => [:city]}]).html_safe %>);
+</script>

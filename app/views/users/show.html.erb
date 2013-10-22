@@ -54,6 +54,8 @@
   </p>
 <% end%>
 
-<script>
-  new Raumzeitgeist(<%= @user.trips.past.to_json(:include => [:legs => {:include => [:city]}]).html_safe %>);
-</script>
+<%= cache :json => 'raumzeitgeist', :expires_in => 1.minutes do %>
+  <script>
+    new Raumzeitgeist(<%= @user.trips.limit(500).past.to_json(:include => [:legs => {:include => [:city]}]).html_safe %>);
+  </script>
+<% end %>
