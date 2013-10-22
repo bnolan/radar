@@ -26,18 +26,20 @@
   <% end %>
 <% end %>
 
-<h3><%= @user.first_name %>s Past Trips</h3>
+<% cache :user => @user.nickname, :partial => 'trips', :expires_in => 1.minutes do %>
+  <h3><%= @user.first_name %>s Past Trips</h3>
 
-<% if @user.trips.past.any? %>
-  <div id="zeitgeist-map"></div>
+  <% if @user.trips.past.any? %>
+    <div id="zeitgeist-map"></div>
   
-  <ul>
-    <% @user.trips.past.order('start desc').each do |trip| %>
-      <%= render :partial => 'trips/show', :locals => { :trip => trip } %>
-    <% end %>
-  </ul>
-<% else %>
-  <p><%= @user.first_name %> doesn't have any past trips.</p>
+    <ul>
+      <% @user.trips.past.order('start desc').each do |trip| %>
+        <%= render :partial => 'trips/show', :locals => { :trip => trip } %>
+      <% end %>
+    </ul>
+  <% else %>
+    <p><%= @user.first_name %> doesn't have any past trips.</p>
+  <% end %>
 <% end %>
 
 <h3>Friends</h3>
@@ -54,7 +56,7 @@
   </p>
 <% end%>
 
-<%= cache :json => 'raumzeitgeist', :expires_in => 1.minutes do %>
+<% cache :json => 'raumzeitgeist', :expires_in => 1.minutes do %>
   <script>
     new Raumzeitgeist(<%= @user.trips.limit(500).past.to_json(:include => [:legs => {:include => [:city]}]).html_safe %>);
   </script>
