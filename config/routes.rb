@@ -17,7 +17,9 @@ Radar::Application.routes.draw do
   get 'terms' => 'welcome#terms', :as => :terms
 
   resources :trips
-  resources :users
+  resources :users do
+    get 'cities/:country/:name' => 'users#city', :as => :city
+  end
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -8,7 +8,11 @@ class TripsController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
   end
+  
+  def city
     
+  end
+  
   def new
     @trip = Trip.new
   end

@@ -9,6 +9,12 @@ class UsersController < ApplicationController
   def show
     @user = User.where('nickname ilike ?', params[:id]).first || raise(ActiveRecord::RecordNotFound)
   end
+
+  def city
+    @user = User.where('nickname ilike ?', params[:user_id]).first || raise(ActiveRecord::RecordNotFound)
+    @city = City.find_by_country_and_name(params[:country], params[:name])
+    @trips = @user.trips.to_city(params[:country], params[:name])
+  end
   
   def update
     current_user.update_attributes!(

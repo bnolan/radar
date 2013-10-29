@@ -1,0 +1,15 @@
+<h1>
+  <%= @user.name %>s <span class="lesser"><%= @trips.many? ? "trips" : "trip" %> to</span> <%= @city.name %>
+</h1>
+
+<p>
+  <%= @user.name %> has visited <%= @city.name %> <%= pluralize @trips.length, 'time' %>.
+</p>
+
+<ul>
+  <% trips = ((current_user and current_user.friends_with? @user) ? @trips : @trips.past) %>
+  
+  <% trips.order('start desc').each do |trip| %>
+    <%= render :partial => 'trips/show', :locals => { :trip => trip } %>
+  <% end %>
+</ul>

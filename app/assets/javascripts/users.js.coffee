@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 class Raumzeitgeist
-  constructor: (trips) ->
+  constructor: (username, trips) ->
     stylez = [
         {
           featureType: "all",
@@ -34,6 +34,7 @@ class Raumzeitgeist
       trip.legs.forEach (leg) ->
         cities[leg.city.name] ||= { 
           name : leg.city.name
+          country : leg.city.country
           latitude : leg.latitude
           longitude : leg.longitude
           color : leg.city.color
@@ -43,42 +44,47 @@ class Raumzeitgeist
         maxCount = Math.max(maxCount, cities[leg.city.name].count++)
         
     for key, city of cities 
-      scale = (5 / maxCount * city.count) + 5
+      do (city) ->
+        scale = (5 / maxCount * city.count) + 5
       
-      if scale.toString() == "Infinity"
-        scale = 8
+        if scale.toString() == "Infinity"
+          scale = 8
       
-      new google.maps.Marker {
-        position : new google.maps.LatLng(city.latitude, city.longitude)
-        map : map
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE
-          fillOpacity: 0
-          strokeColor: '555'
-          strokeWeight: 2
-          scale: scale + 2
+        new google.maps.Marker {
+          position : new google.maps.LatLng(city.latitude, city.longitude)
+          map : map
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE
+            fillOpacity: 0
+            strokeColor: '555'
+            strokeWeight: 2
+            scale: scale + 2
+          }
         }
-      }
 
-      marker = new google.maps.Marker {
-        position : new google.maps.LatLng(city.latitude, city.longitude)
-        map : map
-        title : "#{city.name}"
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE
-          fillColor : 'white'
-          fillOpacity: 0.5
-          strokeColor: city.color
-          strokeWeight: 3
-          scale: scale
+        marker = new google.maps.Marker {
+          position : new google.maps.LatLng(city.latitude, city.longitude)
+          map : map
+          title : "#{city.name}"
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE
+            fillColor : 'white'
+            fillOpacity: 0.5
+            strokeColor: city.color
+            strokeWeight: 3
+            scale: scale
+          }
         }
-      }
 
-      # google.maps.event.addListener marker, 'mouseover', ->
-      #   $(".show-legs tr#leg-#{leg.id}").addClass 'active'
-      # 
-      # google.maps.event.addListener marker, 'mouseout', ->
-      #   $(".show-legs tr").removeClass 'active'
+        pathify = (path) ->
+          path.replace('/','|').replace(/\s+/g,'+').toLowerCase()
+
+        google.maps.event.addListener marker, 'click', ->
+          window.location = ["", "users", username, 'cities', pathify(city.country), pathify(city.name)].join("/")
+          # $(".show-legs tr#leg-#{leg.id}").addClass 'active'
+        # 
+        # google.maps.event.addListener marker, 'mouseout', ->
+        #   $(".show-legs tr").removeClass 'active'
   
 @Raumzeitgeist = Raumzeitgeist
 

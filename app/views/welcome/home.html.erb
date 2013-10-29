@@ -75,5 +75,5 @@
 </p>
 
 <script>
-  new Raumzeitgeist(<%= current_user.trips.past.limit(500).to_json(:include => [:legs => {:include => [:city]}]).html_safe %>);
+  new Raumzeitgeist(<%= current_user.nickname.downcase.to_json.html_safe %>, <%= current_user.trips.past.limit(500).to_json(:include => [:legs => {:include => [:city]}]).html_safe %>);
 </script>

@@ -6,6 +6,7 @@ class Trip < ActiveRecord::Base
   validates_presence_of :start, :finish
   before_save :recalculate_distance
   default_scope includes(:legs)
+  scope :to_city, lambda { |country, city| where(:id => joins(:legs).where('legs.city_path ilike ?', "%/#{city}").select('distinct trip_id')) }
   
   def day_trip?
     days == 0
