@@ -33,7 +33,7 @@
           <span class="color">
             <span style="background: <%= leg.city.color %>; width: 100%">&nbsp;</span>
           </span>
-          <%= leg.city.name %>
+          <%= link_to leg.city.name, [@trip, leg] %>
         </td>
         <td>
           <%= our_date leg.arrival %>

@@ -16,7 +16,10 @@ Radar::Application.routes.draw do
   get 'settings' => 'welcome#settings', :as => :settings
   get 'terms' => 'welcome#terms', :as => :terms
 
-  resources :trips
+  resources :trips do
+    resources :legs
+  end
+  
   resources :users do
     get 'cities/:country/:name' => 'users#city', :as => :city
   end
