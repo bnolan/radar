@@ -17,7 +17,7 @@ class LegController
     autocomplete = new google.maps.places.Autocomplete(input[0], { 
       location : new google.maps.LatLng(@city.latitude, @city.longitude)
       radius : 15000
-      types : ['establishment']
+      # types : ['establishment']
     })
 
     google.maps.event.addListener autocomplete, 'place_changed', ->
@@ -49,25 +49,3 @@ class LegController
         e.preventDefault()
 
 @LegController = LegController
-
-  # $("#venue_name").foursquareAutocomplete({
-  #   latitude: <%= @leg.city.latitude %>,
-  #   longitude: <%= @leg.city.longitude %>,
-  #   oauth_token: "your oauth token",
-  #   client_secret : "<%= foursquare_secret %>",
-  #   client_id : "<%= foursquare_id %>",
-  #   minLength: 3,
-  #   search: function (event, ui) {
-  #     $("#venue_name").val(ui.item.name);
-  #     $("#venue_foreign_key").val("foursquare-" + ui.item.id);
-  #     $("#venue_address").val([ui.item.address, ui.item.cityLine].join(", "));
-  #     $("#venue_category").val(ui.item.category);
-  #     $("#venue_latitude").val(ui.item.latitude);
-  #     $("#venue_longitude").val(ui.item.longitude);
-  #     return false;
-  #   },
-  #   onError : function (errorCode, errorType, errorDetail) {
-  #     var message = "Foursquare Error: Code=" + errorCode + ", errorType= " + errorType + ", errorDetail= " + errorDetail;
-  #     console.log(message);
-  #   }
-  # });
