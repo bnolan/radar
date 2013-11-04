@@ -1,2 +1,79 @@
-<h1>
+<div class="col-md-12">
+  <h1>
+    <%= index_of_leg(@leg).capitalize %> <span class="lesser">destination of a</span>
+    <%= link_to "trip", @leg.trip %>
+    <span class="lesser"> to</span> <%= @leg.city.name %>
+  </h1>
+
+  <p>
+    Away for <%= trip_duration(@leg) %>.
+  </p>
+</div>
+
+<div class="col-md-6">
+  <h3>
+    Venues
+  </h3>
   
+  <% if @leg.venues.any? %>
+    <% @leg.venues.each do |venue|%>
+      <div class="venue">
+        <%= image_tag venue.icon, :class => 'icon' %>
+        <h5><%= truncate(venue.name, :length => 50) %></h5>
+        <address><%= venue.address %></address>
+        <% if venue.notes.present? %>
+          <div class="notes"><%= simple_format venue.notes %></div>
+        <% end %>
+        <p class="meta">Added <%= time_ago_in_words venue.created_at %> ago |
+          <%= link_to "Remove" , [@leg.trip, @leg, venue], :method => 'delete' %>.
+        </p>
+      </div>
+    <% end %>
+  <% else %>
+  <p class="default">
+    Here you can add venues that <%= @leg.trip.future? ? "you will visit" : "you have visited" %>
+    in <%= @leg.city.name %>.
+  </p>
+  <% end %>
+
+  <%= form_for @leg.venues.build do |f| %>
+    <%= f.hidden_field :leg_id %>
+
+    <div class="f">
+      <label>
+        Add a Venue by name
+      </label>
+      <%= f.text_field :name, :style => 'width: 100%' %>
+      <%= f.hidden_field :address %>
+      <%= f.hidden_field :category %>
+      <%= f.hidden_field :phone %>
+      <%= f.hidden_field :website %>
+      <%= f.hidden_field :icon %>
+      <%= f.hidden_field :foreign_key %>
+      <%= f.hidden_field :latitude %>
+      <%= f.hidden_field :longitude %>
+    </div>
+    
+    <div class="f">
+      <label>
+        Description / Notes
+      </label>
+      <%= f.text_area :notes, :style => 'width: 100%' %>
+    </div>
+    
+    <div class="f">
+      <%= submit_tag "Add Venue", :class => 'btn btn-primary' %>
+    </div>
+  <% end %>
+  
+</div>
+
+<div class="col-md-6">
+  <h3>Map</h3>
+  <div id="map"></div>
+</div>
+
+<script>
+  new LegController(<%= @leg.city.as_json.to_json.html_safe %>);
+  // new TripMap('#map', <%= @leg.city.as_json.to_json.html_safe %>);
+</script>

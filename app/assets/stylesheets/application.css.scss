@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require 'bootstrap'
+ *= require 'aristo'
  *= require 'bootstrap-theme'
  *= require_tree .
  */
@@ -114,4 +115,10 @@ small .lesser{
   background: #fcc;
   border: 1px solid #f77;
   padding: 0 20px;
+}
+
+.new_venue{
+  .f{
+    padding-bottom: 10px;
+  }
 }

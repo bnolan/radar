@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require 'jquery-ui'
+//= require 'foursquare-plugin'
 //= require_tree .

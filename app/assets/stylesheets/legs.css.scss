@@ -1,3 +1,42 @@
 // Place all the styles related to the legs controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.venue{
+  position: relative;
+  padding-left: 40px;
+  padding-bottom: 10px;
+  
+  h5{
+    font-weight: bold !important;
+    margin: 0;
+    color: #333;
+  }
+  
+  address{
+    font-style: italic;
+    color: #999;
+    margin: 0;
+  }
+  
+  .notes{
+    padding: 0 20px 0 20px;
+    margin: 10px 0 0 0;
+    border-left: 2px solid #ccc;
+  }
+  
+  img.icon{
+    border: 1px solid #ccc;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+  }
+  
+  .meta{
+    font-size: smaller;
+    color: #777;
+  }
+}

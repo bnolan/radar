@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131021061825) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20131104041953) do
 
   create_table "legs", force: true do |t|
     t.string   "city_path"
@@ -50,6 +47,21 @@ ActiveRecord::Schema.define(version: 20131021061825) do
     t.string   "city_path"
     t.string   "email"
     t.integer  "uid",         limit: 8
+  end
+
+  create_table "venues", force: true do |t|
+    t.string   "name"
+    t.string   "foreign_key"
+    t.string   "phone"
+    t.string   "website"
+    t.string   "category"
+    t.text     "address"
+    t.text     "notes"
+    t.integer  "user_id"
+    t.integer  "leg_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "location",    limit: {:srid=>4326, :type=>"point", :geographic=>true}
   end
 
 end
