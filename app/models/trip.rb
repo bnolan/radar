@@ -1,4 +1,6 @@
 class Trip < ActiveRecord::Base
+  require 'rmagick'
+  
   has_many :legs
   belongs_to :user
   scope :upcoming, lambda { where('finish >= ?', Date.today) }
@@ -46,5 +48,33 @@ class Trip < ActiveRecord::Base
   # from http://www.carbonindependent.org/sources_aviation.htm
   def carbon_kg
     (distance * 0.033).to_i
+  end
+  
+  def icon_path
+    path = "/system/trip-icons/trip-icon-#{id}.png"
+    
+    full_path = Rails.root.to_s + "/public" + path
+
+    if !File.exists? full_path
+      generate_icon(full_path)
+    end
+    
+    path
+  end
+  
+  def generate_icon(path)
+    canvas = Magick::Image.new(64, 64) # , Magick::HatchFill.new('white','lightcyan2'))
+    gc = Magick::Draw.new
+
+    width = 64.0 / legs.count
+    
+    legs.each_with_index do |leg, index|
+      gc.fill(leg.city.color)
+      gc.fill_opacity(1)
+      gc.rectangle(index * width, 0, index * width + width, 64)
+    end
+
+    gc.draw(canvas)
+    canvas.write(path)
   end
 end

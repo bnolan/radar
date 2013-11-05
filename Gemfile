@@ -14,7 +14,7 @@ gem 'dynamic_form'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo'
 gem 'zip'
-
+gem 'rmagick'
 
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
