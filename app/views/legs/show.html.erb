@@ -1,3 +1,7 @@
+<% content_for :metatags do %>
+  <link rel="shortcut icon" href="<%= @leg.trip.icon_path %>" />
+<% end %>
+
 <div class="col-md-12">
   <h1>
     <%= index_of_leg(@leg).capitalize %> <span class="lesser">destination of a</span>
