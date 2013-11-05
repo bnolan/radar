@@ -1,5 +1,5 @@
 class Trip < ActiveRecord::Base
-  require 'rmagick'
+  require 'RMagick'
   
   has_many :legs
   belongs_to :user
