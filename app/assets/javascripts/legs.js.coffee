@@ -2,6 +2,41 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+class CityMap
+  constructor: (id, city, venues) ->
+    @city = city
+    @venues = venues
+
+    bounds = new google.maps.LatLngBounds
+    for v in venues when v.latitude
+      bounds.extend new google.maps.LatLng(v.latitude, v.longitude)
+
+    mapOptions = {
+      zoom : 12
+      center : new google.maps.LatLng(city.latitude, city.longitude)
+      mapTypeId : google.maps.MapTypeId.TERRAIN
+    }
+
+    @map = new google.maps.Map($(id)[0], mapOptions);
+    @map.fitBounds(bounds)
+    
+    setTimeout( =>
+      console.log(@map.getZoom())
+    
+      if @map.getZoom() > 12
+        @map.setZoom(12)
+    , 250)
+    
+    venues.forEach (venue) =>
+      marker = new google.maps.Marker {
+        position : new google.maps.LatLng(venue.latitude, venue.longitude)
+        map : @map
+        title : "#{venue.name}"
+      }
+    
+    
+@CityMap = CityMap
+  
 class LegController
   constructor: (city) ->
     @city = city
@@ -49,3 +84,25 @@ class LegController
         e.preventDefault()
 
 @LegController = LegController
+
+# $("#venue_name").foursquareAutocomplete({
+#   latitude: <%= @leg.city.latitude %>,
+#   longitude: <%= @leg.city.longitude %>,
+#   oauth_token: "your oauth token",
+#   client_secret : "<%= foursquare_secret %>",
+#   client_id : "<%= foursquare_id %>",
+#   minLength: 3,
+#   search: function (event, ui) {
+#     $("#venue_name").val(ui.item.name);
+#     $("#venue_foreign_key").val("foursquare-" + ui.item.id);
+#     $("#venue_address").val([ui.item.address, ui.item.cityLine].join(", "));
+#     $("#venue_category").val(ui.item.category);
+#     $("#venue_latitude").val(ui.item.latitude);
+#     $("#venue_longitude").val(ui.item.longitude);
+#     return false;
+#   },
+#   onError : function (errorCode, errorType, errorDetail) {
+#     var message = "Foursquare Error: Code=" + errorCode + ", errorType= " + errorType + ", errorDetail= " + errorDetail;
+#     console.log(message);
+#   }
+# });

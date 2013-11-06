@@ -18,5 +18,4 @@ class Venue < ActiveRecord::Base
       f
     end
   end
-
 end
