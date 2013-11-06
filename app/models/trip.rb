@@ -9,6 +9,7 @@ class Trip < ActiveRecord::Base
   before_save :recalculate_distance
   default_scope includes(:legs)
   scope :to_city, lambda { |country, city| where(:id => joins(:legs).where('legs.city_path ilike ?', "%/#{city}").select('distinct trip_id')) }
+  after_save :delete_icon
   
   def day_trip?
     days == 0
@@ -52,7 +53,6 @@ class Trip < ActiveRecord::Base
   
   def icon_path
     path = "/system/trip-icons/trip-icon-#{id}.png"
-    
     full_path = Rails.root.to_s + "/public" + path
 
     if !File.exists? full_path
@@ -60,6 +60,13 @@ class Trip < ActiveRecord::Base
     end
     
     path
+  end
+  
+  def delete_icon
+    full_path = Rails.root.to_s + "/public" + "/system/trip-icons/trip-icon-#{id}.png"
+    if File.exists? full_path
+      File.delete(full_path)
+    end
   end
   
   def generate_icon(path)
