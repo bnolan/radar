@@ -31,7 +31,7 @@ class TripsController < ApplicationController
   def update
     @trip = current_user.trips.find params[:id]
     @trip.attributes = trip_params
-    build_legs(@trip)
+    update_legs(@trip)
     if @trip.save
       flash[:notice] = "The changes to your trip were saved"
       redirect_to @trip
@@ -65,6 +65,27 @@ class TripsController < ApplicationController
         :arrival => leg_params[:arrival],
         :location => Leg.factory.point(leg_params[:longitude], leg_params[:latitude])
       )
+    end
+    
+    trip.start = trip.legs.first.arrival
+  end
+
+  def update_legs(trip)
+    ids = params[:trip][:leg].collect { |key, leg| leg[:id].present? ? leg[:id].to_i : nil }.compact
+    
+    # Remove unreferenced legs
+    trip.legs.to_a.reject { |leg| ids.include? leg.id }.each { |leg| leg.destroy }
+    
+    params[:trip][:leg].each do |index, leg_params|
+      if leg_params[:id].present?
+        trip.legs.find(leg_params[:id]).update_attributes! :arrival => leg_params[:arrival]
+      else
+        trip.legs.build(
+          :city_path => leg_params[:city_path],
+          :arrival => leg_params[:arrival],
+          :location => Leg.factory.point(leg_params[:longitude], leg_params[:latitude])
+        )
+      end
     end
     
     trip.start = trip.legs.first.arrival

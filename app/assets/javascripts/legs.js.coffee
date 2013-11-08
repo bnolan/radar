@@ -28,11 +28,19 @@ class CityMap
     , 250)
     
     venues.forEach (venue) =>
+      latlng = new google.maps.LatLng(venue.latitude, venue.longitude)
+      
       marker = new google.maps.Marker {
-        position : new google.maps.LatLng(venue.latitude, venue.longitude)
+        position : latlng
         map : @map
         title : "#{venue.name}"
       }
+
+      # google.maps.event.addListener marker, 'mouseover', =>
+      #   @overlay = new Tooltip(@map, latlng, "#{venue.name}<br /><small>#{venue.address}</small>")
+      # 
+      # google.maps.event.addListener marker, 'mouseout', =>
+      #   @overlay.setMap null
     
     
 @CityMap = CityMap

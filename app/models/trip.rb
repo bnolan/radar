@@ -1,7 +1,7 @@
 class Trip < ActiveRecord::Base
   require 'RMagick'
   
-  has_many :legs
+  has_many :legs, :order => 'arrival asc'
   belongs_to :user
   scope :upcoming, lambda { where('finish >= ?', Date.today) }
   scope :past, lambda { where('finish < ?', Date.today) }

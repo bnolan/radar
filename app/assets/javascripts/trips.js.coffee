@@ -84,6 +84,13 @@ class TripController
   constructor: ->
     for row in $("table.legs tr.leg")
       @addAutocompleter($(row))
+      
+    $("table.legs tbody").sortable({
+      axis : "y"
+      items : "tr.leg"
+      stop : (event, ui) ->
+        console.log ui.item[0]
+    }).disableSelection();      
     
   addAutocompleter: (row) ->
     if not google?
@@ -103,6 +110,7 @@ class TripController
       ).reverse().join("/")
       
       row.find("input[name*='[city_path]']").val(path)
+      row.find("input[name*='[id]']").val("")
       row.find("input[name*='[latitude]']").val(place.geometry.location.lat())
       row.find("input[name*='[longitude]']").val(place.geometry.location.lng())
       

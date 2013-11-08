@@ -6,7 +6,7 @@
 <div class="col-md-12">
   <h1>
     <%= image_tag @trip.icon_path %>
-    Trip to <%= @trip.legs.collect { |l| l.city.name }.to_sentence %>
+    Trip to <%= @trip.legs.collect { |l| l.city.name }.uniq.to_sentence %>
   </h1>
 
   <p>

@@ -17,7 +17,7 @@ module ApplicationHelper
   end
   
   def trip_name(t)
-    "Trip to " + t.legs.collect { |l| l.city.name }.to_sentence
+    "Trip to " + t.legs.collect { |l| l.city.name }.uniq.to_sentence
   end
   
   def trip_duration(t)

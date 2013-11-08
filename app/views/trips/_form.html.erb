@@ -7,6 +7,7 @@
         <td>
           Destination:<br />
           <%= ff.text_field :city, :value => ff.object.city.name %>
+          <%= ff.hidden_field :id %>
           <%= ff.hidden_field :city_path %>
           <%= ff.hidden_field :latitude, :value => ff.object.city.latitude %>
           <%= ff.hidden_field :longitude, :value => ff.object.city.longitude %>

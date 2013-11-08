@@ -3,6 +3,12 @@
 </h1>
 
 <%= form_for @trip do |f| %>
+
+  <small>
+    <b>Hint:</b> You can drag and drop Destinations to reorder your trip. You may have
+    to manually edit the dates after reording.
+  </small>
+  
   <%= render :partial => 'form', :locals => {:f => f} %>
 
   <div>
